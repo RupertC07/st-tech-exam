@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -27,4 +28,18 @@ Route::group(['prefix' => 'test'], function () {
 
 Route::group(['prefix' => 'user'], function () {
     Route::post('/authenticate', [UserController::class, 'auth']);
+});
+
+Route::group(['prefix' => 'employee'], function () {
+    Route::get('/', [EmployeeController::class, 'index']);
+    Route::post('/', [EmployeeController::class, 'create']);
+    Route::put('/{id}', [EmployeeController::class, 'update']);
+    Route::get('/{id}', [EmployeeController::class, 'show']);
+    Route::delete('/{id}', [EmployeeController::class, 'delete']);
+});
+
+
+Route::group(['prefix' => 'analytics'], function () {
+    Route::get('/employee', [EmployeeController::class, 'summarize']);
+
 });

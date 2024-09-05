@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('birthdate');
             $table->string('gender');
             $table->integer('monthly_salary');
-            $table->timestamp('deleted_at');
+            $table->timestamp('deleted_at')->nullable(true);
             $table->timestamps();
         });
     }
