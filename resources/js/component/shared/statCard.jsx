@@ -1,6 +1,6 @@
 import React from "react";
 
-const StatCard = ({ label, icon, value }) => {
+const StatCard = ({ label, icon, value, description = null }) => {
     const formattedValue =
         typeof value === "number" ? value.toLocaleString() : value;
     return (
@@ -11,6 +11,7 @@ const StatCard = ({ label, icon, value }) => {
                 </div>
                 <div className="stat-title">{label}</div>
                 <div className="stat-value">{formattedValue}</div>
+                <div className="stat-desc">{description}</div>
             </div>
         </div>
     );

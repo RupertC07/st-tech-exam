@@ -69,7 +69,9 @@ const Navbar = ({ route }) => {
                 <div className="navbar-end">
                     <div className="tooltip tooltip-bottom" data-tip="Log out">
                         <AppButton
-                            className={"btn bg-secondary "}
+                            className={
+                                "btn bg-secondary text-base-100 hover:text-secondary "
+                            }
                             onClick={handleLogout}
                         >
                             <MdLogout />

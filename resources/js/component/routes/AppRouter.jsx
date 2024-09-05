@@ -6,6 +6,7 @@ import Mainlayout from "../Layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import LoginRoute from "./LoginRoute";
 import Employee from "../pages/employee";
+import NotFound from "../pages/NotFound";
 
 const AppRouter = () => {
     return (
@@ -39,6 +40,7 @@ const AppRouter = () => {
                     path="/login"
                     element={<LoginRoute element={<Login></Login>} />}
                 />
+                <Route path="/*" element={<NotFound></NotFound>} />
             </Routes>
         </Router>
     );

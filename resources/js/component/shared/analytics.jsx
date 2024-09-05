@@ -11,6 +11,7 @@ const Analytics = ({ setLoader }) => {
     const [femaleCount, setFemaleCount] = useState(0);
     const [avgAge, setAvgAge] = useState(0);
     const [monthlySalary, setMonthlySalary] = useState(0);
+    const [totalEmployee, setTotalEmployee] = useState(0);
     useEffect(() => {
         const handleFetch = async () => {
             try {
@@ -20,10 +21,12 @@ const Analytics = ({ setLoader }) => {
                     setFemaleCount(data.female);
                     setAvgAge(data.averageAge);
                     setMonthlySalary(data.totalMonthlySalary);
-                    setLoader(false);
+                    setTotalEmployee(data.male + data.female);
                 }
             } catch (error) {
                 toastr.error("Something went wrong.", "Error");
+            } finally {
+                setLoader(false);
             }
         };
 
@@ -36,24 +39,28 @@ const Analytics = ({ setLoader }) => {
                     icon={<FaMale></FaMale>}
                     label={"Male"}
                     value={maleCount}
+                    description={`Out of ${totalEmployee} employees`}
                 ></StatCard>
 
                 <StatCard
                     icon={<FaFemale></FaFemale>}
                     label={"Female"}
                     value={femaleCount}
+                    description={`Out of ${totalEmployee} employees`}
                 ></StatCard>
 
                 <StatCard
                     icon={<FaInfoCircle></FaInfoCircle>}
                     label={"Average Age"}
                     value={avgAge}
+                    description={`Highest : 0 | Lowest : 0`}
                 ></StatCard>
 
                 <StatCard
                     icon={<FaMoneyCheck></FaMoneyCheck>}
                     label={"Total Monthly Salary"}
                     value={monthlySalary}
+                    description={`Average : 0`}
                 ></StatCard>
             </div>
         </div>
