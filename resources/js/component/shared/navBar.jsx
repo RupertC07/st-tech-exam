@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AppButton from "./button";
+import { signout } from "../Services/AuthUser";
 
 const Navbar = ({ route }) => {
     const navigate = useNavigate();
     const { logout } = useAuth();
 
-    const handleLogout = ({ route }) => {
-        logout();
-        navigate("/login");
+    const handleLogout = async ({ route }) => {
+        await signout(logout, navigate);
     };
     return (
         <div className="p-6">

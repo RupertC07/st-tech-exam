@@ -16,6 +16,7 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
+        "date-fns": "^3.6.0",
         "joi": "^17.13.3",
         "js-cookie": "^3.0.5",
         "postcss-loader": "^8.1.1",

@@ -5,7 +5,7 @@ import AppButton from "../button";
 import { useState } from "react";
 
 import Joi from "joi";
-import { userAuth } from "../../hooks/AuthUser";
+import { userAuth } from "../../Services/AuthUser";
 import { useAuth } from "../../hooks/AuthContext";
 import { data } from "autoprefixer";
 import { useNavigate } from "react-router-dom";

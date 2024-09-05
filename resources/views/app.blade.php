@@ -12,4 +12,10 @@
     @viteReactRefresh
     @vite('resources/js/app.js')
 </body>
+
+<script>
+    window.env = {
+        API_BASE_URL : '{{ env("API_BASE_URL") }}'
+    }
+</script>
 </html>

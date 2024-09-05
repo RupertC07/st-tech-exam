@@ -21,7 +21,7 @@ class EmployeeRepository implements EmployeeInterface
 
 
 
-            return $this->successResponse($employees, "Successfully fecthed");
+            return $this->successResponse(["data" => $employees->items(), "pagination" => ["current" => $employees->currentPage(), "next" => $nextPage, "previous" => $prevPage]], "Successfully fecthed");
 
         } catch (\Exception $e) {
             $message = config('app.env') == 'local' ? $e : "Internal Server Error";

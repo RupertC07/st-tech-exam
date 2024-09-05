@@ -3,15 +3,25 @@ import AppButton from "../../button";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import { DatePicker, NumBox, SelectBox, TextBox } from "../inputs/input";
-import { addNew, deleteEmployee } from "../../../hooks/Employee";
+import { addNew, deleteEmployee } from "../../../Services/Employee";
 
 const DeleteModal = ({ id, setLoader, onClose, handleFetch, name }) => {
     const handleSave = async () => {
         try {
-            await deleteEmployee(id, setLoader, onClose);
+            setLoader(true);
+            const response = await deleteEmployee(id);
+
+            if (response) {
+                toastr.success("Employee has been removed", "Success");
+                handleFetch();
+                onClose();
+            }
         } catch (error) {
+            console.log(error);
             toastr.error("Something went wrong.", "Error");
+            onClose();
         } finally {
+            setLoader(false);
         }
     };
 

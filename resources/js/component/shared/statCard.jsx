@@ -1,8 +1,7 @@
 import React from "react";
 
 const StatCard = ({ label, icon, value, description = null }) => {
-    const formattedValue =
-        typeof value === "number" ? value.toLocaleString() : value;
+    const formattedValue = parseInt(value).toLocaleString();
     return (
         <div className="card bg-base-100 w-96 rounded-xl shadow-xl">
             <div className="stat">

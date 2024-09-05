@@ -31,7 +31,7 @@ class EmployeeRequest extends FormRequest
             'last_name' => ['string', 'required', 'max:255'],
             'gender' => ['string', 'required', 'in:Male,Female'],
             'birthdate' => ['required'],
-            'monthly_salary' => ['required', 'numeric', 'min:1']
+            'monthly_salary' => ['required', 'numeric', 'min:0']
         ];
     }
 

@@ -3,7 +3,7 @@ import AppButton from "../../button";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import { DatePicker, NumBox, SelectBox, TextBox } from "../inputs/input";
-import { addNew } from "../../../hooks/Employee";
+import { addNew, fetchEmployee, update } from "../../../Services/Employee";
 
 const SaveModal = ({
     id,
@@ -19,38 +19,70 @@ const SaveModal = ({
     const [gender, setGender] = useState("");
     const [salary, setSalary] = useState("");
 
+    const handleShow = async () => {
+        try {
+            setLoader(true);
+            const record = await fetchEmployee(id);
+            if (record) {
+                // console.log(record);
+                setFname(record.data.employee.first_name);
+                setLname(record.data.employee.last_name);
+                setBdate(record.data.employee.birthdate);
+                setSalary(record.data.employee.monthly_salary);
+                setGender(record.data.employee.gender);
+            }
+        } catch (error) {
+            toastr.error("Something went wrong");
+            onClose();
+        } finally {
+            setLoader(false);
+        }
+    };
+
     useEffect(() => {
         // we add this code as an option to view and get the record without an API call
         //But for the sake of this exam, we will use api call, so the API for fetching will be used
-        if (employee && id) {
-            setFname(employee.fname || "");
-            setLname(employee.lname || "");
-            setGender(employee.gender || "");
-            setBdate("2002-07-16" || "");
-            setSalary(employee.salary || "");
+        // if (employee && id) {
+        //     setFname(employee.fname || "");
+        //     setLname(employee.lname || "");
+        //     setGender(employee.gender || "");
+        //     setBdate("2002-07-16" || "");
+        //     setSalary(employee.salary || "");
+        // }
+        if (id) {
+            handleShow();
         }
     }, []);
     const handleSave = async () => {
+        setLoader(true);
+        const payload = {
+            first_name: fname,
+            last_name: lname,
+            birthdate: bdate,
+            gender: gender,
+            monthly_salary: salary,
+        };
         try {
             if (id) {
-                toastr.success("Employee updated successfully");
-            } else {
-                const payload = {
-                    fname: fname,
-                    lname: lname,
-                    bdate: bdate,
-                    gender: gender,
-                    salary: salary,
-                };
-                const newData = await addNew(payload, setLoader, onClose);
-                if (newData) {
-                    // console.log(newData);
+                const updatedData = await update(payload, id);
+                if (updatedData) {
+                    toastr.success("Employee has been updated", "Success");
                     await handleFetch();
+                    onClose();
+                }
+            } else {
+                const newData = await addNew(payload);
+                if (newData) {
+                    toastr.success("Employee has been added", "Success");
+                    await handleFetch();
+                    onClose();
                 }
             }
         } catch (error) {
-            toastr.error("Something went wrong.", "Error");
+            console.log(error);
+            toastr.error("Something went wrong", "Error");
         } finally {
+            setLoader(false);
         }
     };
 

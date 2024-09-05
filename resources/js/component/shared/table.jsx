@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import AppButton from "./button";
 // import user from "../../../assets/user";
@@ -9,6 +9,10 @@ import user from "../../../assets/user.png";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import DeleteModal from "./forms/modals/deleteModal";
+import { fetchEmployees } from "../Services/Employee";
+import Search from "./forms/inputs/search";
+import { TfiReload } from "react-icons/tfi";
+import Pagination from "./pagination";
 
 const EmployeeTable = ({ setLoader }) => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -17,6 +21,9 @@ const EmployeeTable = ({ setLoader }) => {
     const [viewOnly, setViewOnly] = useState(false);
     const [employees, setEmployees] = useState([]);
     const [employee, setEmployee] = useState({});
+    const [query, setQuery] = useState("");
+    const [pagination, setPagination] = useState({});
+    const [employeeName, setEmployeeName] = useState("");
 
     const handleOpenModal = (id, viewOnly = false) => {
         if (id) {
@@ -36,7 +43,7 @@ const EmployeeTable = ({ setLoader }) => {
         setViewOnly(viewOnly);
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = (id, name) => {
         const employee = employees.find((emp) => {
             return id == emp.id;
         });
@@ -50,25 +57,52 @@ const EmployeeTable = ({ setLoader }) => {
 
         setEmployeeId(id);
         setDeleteOpen(true);
+        setEmployeeName(name);
     };
 
-    const handleFetch = async () => {
+    const handleSearch = async () => {
         try {
-            setEmployees([
-                {
-                    id: 1,
-                    fname: "Rupert",
-                    lname: "Caingal",
-                    gender: "Male",
-                    bdate: "2002/07/16",
-                    salary: 1000,
-                },
-            ]);
+            if (query) {
+                await handleFetch(query);
+            }
+            return;
         } catch (error) {
-        } finally {
-            console.log(employees);
+            toastr.error("Something went wrong");
         }
     };
+
+    const handleReload = async () => {
+        try {
+            await handleFetch();
+            setQuery("");
+        } catch (error) {
+            toastr.error("Something went wrong");
+        }
+    };
+
+    const handlePaginate = async (page) => {
+        await handleFetch(query != "" ? query : null, page);
+    };
+
+    const handleFetch = async (search = null, page = 1) => {
+        try {
+            setLoader(true);
+            const record = await fetchEmployees(search, page);
+            if (record) {
+                setEmployees(record.data.data);
+                setPagination(record.data.pagination);
+            }
+        } catch (error) {
+            toastr.error("Something went wrong");
+        } finally {
+            // console.log(employees);
+            setLoader(false);
+        }
+    };
+
+    useEffect(() => {
+        handleFetch();
+    }, []);
 
     return (
         <div>
@@ -79,14 +113,49 @@ const EmployeeTable = ({ setLoader }) => {
                             <b>Employees</b>
                         </h2>
                         <div>
-                            <div className="py-2 flex justify-end">
-                                {" "}
-                                <AppButton
-                                    className={"btn btn-primary font-bold"}
-                                    onClick={() => handleOpenModal(null)}
-                                >
-                                    <IoMdPersonAdd /> New Employee
-                                </AppButton>
+                            <div className="py-2 flex justify-between">
+                                <div>
+                                    <div className="flex justify-between gap-2">
+                                        <div>
+                                            {" "}
+                                            <Search
+                                                value={query}
+                                                onChange={(e) =>
+                                                    setQuery(e.target.value)
+                                                }
+                                                className={"grow w-96"}
+                                            ></Search>
+                                        </div>
+
+                                        <div>
+                                            <AppButton
+                                                onClick={handleSearch}
+                                                isLoading={false}
+                                                className="btn btn-secondary"
+                                            >
+                                                Search
+                                            </AppButton>
+                                        </div>
+                                        <div>
+                                            <AppButton
+                                                onClick={handleReload}
+                                                isLoading={false}
+                                                className="btn btn-ghost"
+                                            >
+                                                <TfiReload />
+                                            </AppButton>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    {" "}
+                                    <AppButton
+                                        className={"btn btn-primary font-bold"}
+                                        onClick={() => handleOpenModal(null)}
+                                    >
+                                        <IoMdPersonAdd /> New Employee
+                                    </AppButton>
+                                </div>
                             </div>
 
                             <div className="overflow-x-auto">
@@ -95,8 +164,10 @@ const EmployeeTable = ({ setLoader }) => {
                                     <thead>
                                         <tr>
                                             <th className="w-1/4">Name</th>
-                                            <th className="w-1/4">Birthdate</th>
-                                            <th className="w-1/4">
+                                            <th className="text-center w-1/4">
+                                                Birthdate
+                                            </th>
+                                            <th className="text-center w-1/4">
                                                 Monthly Salary
                                             </th>
                                             <th className="w-1/4 text-center">
@@ -132,10 +203,10 @@ const EmployeeTable = ({ setLoader }) => {
                                                             <div>
                                                                 <div className="font-bold">
                                                                     {
-                                                                        employee.fname
+                                                                        employee.first_name
                                                                     }{" "}
                                                                     {
-                                                                        employee.lname
+                                                                        employee.last_name
                                                                     }
                                                                 </div>
                                                                 <div className="text-sm opacity-50">
@@ -146,8 +217,14 @@ const EmployeeTable = ({ setLoader }) => {
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>{employee.bdate}</td>
-                                                    <td>{employee.salary}</td>
+                                                    <td className="text-center">
+                                                        {employee.birthdate}
+                                                    </td>
+                                                    <td className="text-center">
+                                                        {parseInt(
+                                                            employee.monthly_salary
+                                                        ).toLocaleString()}
+                                                    </td>
                                                     <td className="text-center">
                                                         <AppButton
                                                             className={
@@ -181,7 +258,9 @@ const EmployeeTable = ({ setLoader }) => {
                                                             }
                                                             onClick={() =>
                                                                 handleDelete(
-                                                                    employee.id
+                                                                    employee.id,
+
+                                                                    `${employee.first_name} ${employee.last_name}  `
                                                                 )
                                                             }
                                                         >
@@ -204,6 +283,15 @@ const EmployeeTable = ({ setLoader }) => {
                                     {/* foot */}
                                 </table>
                             </div>
+
+                            <div className="flex justify-center p-6">
+                                <Pagination
+                                    currentpage={pagination.current}
+                                    next={pagination.next}
+                                    prev={pagination.previous}
+                                    handlePaginate={handlePaginate}
+                                ></Pagination>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -222,8 +310,8 @@ const EmployeeTable = ({ setLoader }) => {
             {deleteOpen && (
                 <DeleteModal
                     handleFetch={handleFetch}
-                    name={"rupert"}
-                    id={1}
+                    name={employeeName}
+                    id={employeeId}
                     setLoader={setLoader}
                     onClose={() => setDeleteOpen(false)}
                 />
