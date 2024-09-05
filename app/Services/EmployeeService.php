@@ -87,7 +87,7 @@ class EmployeeService
             'femaleCount' => $femaleCount,
             'ageStats' => [
                 'average_age' => round($ageStats->average_age),
-                'min' => $ageStats->min_value,
+                'min' => $ageStats->min_age,
                 'max' => $ageStats->max_age
             ],
             'totalSalary' => $totalSalary,
