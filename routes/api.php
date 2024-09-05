@@ -28,6 +28,7 @@ Route::group(['prefix' => 'test'], function () {
 
 Route::group(['prefix' => 'user'], function () {
     Route::post('/authenticate', [UserController::class, 'auth']);
+    Route::post('/signout', [UserController::class, 'signout'])->middleware('auth:sanctum');
 });
 
 

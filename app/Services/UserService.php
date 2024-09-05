@@ -4,10 +4,12 @@ namespace app\Services;
 use Illuminate\Support\Facades\Auth;
 
 
-class UserService {
+class UserService
+{
 
-    public function auth($request){
-        if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+    public function auth($request)
+    {
+        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return null;
         }
         $user = Auth::user();
@@ -15,9 +17,11 @@ class UserService {
 
         return $token;
     }
-    public  function logout($request){
+    public function logout($request)
+    {
         $user = $request->user();
-        if($user)
+        \Log::info($user);
+        if ($user)
             $user->tokens()->delete();
         return true;
     }
