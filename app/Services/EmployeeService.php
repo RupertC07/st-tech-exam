@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services;
+namespace App\Services;
 use App\Models\Employee;
 
 class EmployeeService {
@@ -16,7 +16,7 @@ class EmployeeService {
         return $employee;
     }
 
-    public function updated($request, $id){
+    public function update($request, $id){
         $employee = Employee::where('id', $id)->update([
             "first_name" => $request->first_name,
             "last_name" => $request->last_name,
