@@ -30,7 +30,10 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/authenticate', [UserController::class, 'auth']);
 });
 
-Route::group(['prefix' => 'employee'], function () {
+
+
+
+Route::group(['prefix' => 'employee', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/', [EmployeeController::class, 'index']);
     Route::post('/', [EmployeeController::class, 'create']);
     Route::put('/{id}', [EmployeeController::class, 'update']);
@@ -39,7 +42,6 @@ Route::group(['prefix' => 'employee'], function () {
 });
 
 
-Route::group(['prefix' => 'analytics'], function () {
+Route::group(['prefix' => 'analytics', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/employee', [EmployeeController::class, 'summarize']);
-
 });
