@@ -53,7 +53,7 @@ class EmployeeService
 
             });
         }
-        $employee = $employee->orderByDesc('updated_at')->orderBy('id');
+        $employee = $employee->orderByDesc('updated_at')->orderByDesc('id');
         $employee = $employee->paginate($perpage);
         return $employee;
     }
