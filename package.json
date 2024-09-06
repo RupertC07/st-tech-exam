@@ -3,7 +3,9 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "mp:1": "node mp1.js",
+        "mp:2": "node mp2.js"
     },
     "devDependencies": {
         "@vitejs/plugin-react": "^4.3.1",
