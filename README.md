@@ -90,7 +90,14 @@ Follow these steps to install and set up the application:
    ```shell
        php artisan db:seed --class=EmployeeSeeder
 
-10. **Start the server:**
+10. **Generate Key:**
+
+    run this 
+
+    ```shell
+    php artisan key:generate
+    
+11. **Start the server:**
 
     run this 
 
