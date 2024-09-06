@@ -1,66 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# MINI HRS
 
-## About Laravel
+## Overview
+The mini HR system is a streamlined application designed to facilitate HR tasks. It allows HR personnel to perform CRUD operations on employee data, monitor key summaries for analytics, and manage login functionality for secure access. This system enhances HR efficiency by providing a centralized platform for data management and insights.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Main Functionalities
+- **Sign In:** HR personnel can securely sign in to the system.
+- **Create Employee:** Allows HR to add new employee entries.
+- **Update Employee:** HR can edit and update employee details.
+- **Remove Employee:** HR can soft delete employee records while preserving the data.
+- **View Employee:** HR can view individual employee profiles.
+- **Search Employee:** HR can search for employees based on various criteria.
+- **Dashboard Summary:** Provides a dashboard for monitoring and analyzing key employee data.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tech Stack & Tools
+- **Backend:** Laravel
+- **Database:** MySQL
+- **Frontend:** Vite, React.js
+- **Styling:** Tailwind CSS, Daisy UI
 
-## Learning Laravel
+## Installation and Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Requirements
+Before setting up the application, ensure that you have the following requirements installed on your system:
+- **PHP 8.1:** Ensure that PHP 8.1 or later is installed on your system.
+- - **NODE 20:** Ensure that PHP NODE 20.15 or later is installed on your system.
+- **XAMPP/Laragon:** Set up XAMPP or Laragon to serve as your local development environment for the database.
+- **Composer:** Make sure Composer is installed on your system to manage PHP dependencies.
+- - **Node:** Make sure Node is installed on your system to manage frontend  dependencies.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Installation Steps
+Follow these steps to install and set up the application:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the Repository:**
 
-## Laravel Sponsors
+    ```shell
+    git clone https://github.com/RupertC07/st-tech-exam
+    
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Navigate to Project Directory:**
+   
+    ```shell
+    cd st-tech-exam
+    
 
-### Premium Partners
+3. **Install Dependencies:**
+   
+    ```shell
+    composer install
+    npm install 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+4.  **After Installation Configure Environment Variables:**
+    On project directory you will find .env.example copy it and remove '.example'
+    On the database part, please ensure that it will be reflected based on your credentials and ip.
+    
+       ```shell
+           
+            DB_CONNECTION=mysql
+            DB_HOST=127.0.0.1
+            DB_PORT=3306
+            DB_DATABASE=your databasename
+            DB_USERNAME=your database username
+            DB_PASSWORD=your database/server password
+           API_BASE_URL=http://127.0.0.1:8000/api
+           APP_URL=http://127.0.0.1:8000
+       
+6. **Set Up Your Database Server:**
+    Start your Laragon or Xampp
+    
+7. **Migrate All the Tables from Project Directory:**
 
-## Contributing
+   Though laravel has the capability to create database, it's safe to ensure that you already creayed a database for this project.
+    run this to your cmd/bash. Note: Ensure that You already created the database to avoid error
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```shell
+        php artisan migrate
 
-## Code of Conduct
+8. **Seed the Database with Admin Credentials:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   After migrating the tables, you can seed the database with initial admin credentials by running the following command. Note: Ensure that you've already created the database to avoid errors.
 
-## Security Vulnerabilities
+   ```shell
+       php artisan db:seed
+9. **(Optional) Seed the Database with Sample Employee Data:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   If you want the database to be pre-populated with sample employee data, run the following command:
 
-## License
+   ```shell
+       php artisan db:seed --class=EmployeeSeeder
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+10. **Start the server:**
+
+    run this 
+
+    ```shell
+    php artisan serve
+    npm run dev //on the separate terminal
+
+### Aight! Our project setup is done!
+
+
+## HR System Access
+
+1. Go to the application URL specified in your `.env` file (`APP_URL`).
+2. Log in using the default admin credentials:
+
+   - **Email:** admin@example.com
+   - **Password:** password
+     
+---
+Enjoy the app! I am open to collaboration and discussion to further improve this project. Feel free to reach out!
+
+    
