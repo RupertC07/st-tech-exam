@@ -36,7 +36,7 @@ const Navbar = ({ route }) => {
                             </li>
                         </ul>
                     </div>
-                    <span className="btn btn-ghost text-xl">JRC</span>
+                    <span className="btn btn-ghost text-xl">HRS</span>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">

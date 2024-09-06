@@ -115,15 +115,10 @@ export const fetchEmployees = async (search = null, page = 1) => {
 };
 
 export const fetchEmployee = async (id) => {
-    try {
-        const response = await apiService.get(`/employee/${id}`);
-        if (response.status == 200) {
-            // console.log(response);
-            return response.data;
-        }
-        return null;
-    } catch (error) {
-        console.log(error);
-        toastr.error("Something went wrong", "Error");
+    const response = await apiService.get(`/employee/${id}`);
+    if (response.status == 200) {
+        // console.log(response);
+        return response.data;
     }
+    return null;
 };
